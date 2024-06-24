@@ -27,6 +27,13 @@ class Serializer(Schema):
         dynamic_class = type(classname, (object,), attrs)
         return dynamic_class
 
+    def get_data(self,data):
+        try:
+            data=super().load(data)
+            return data
+        except ValidationError as e:
+            raise Exception(str(e))
+
 
 class RequestSchema(Serializer):
     name = fields.String(required=True, validate=Length(min=2, max=50))
@@ -54,8 +61,7 @@ data={
 }
 try:
     s=RequestSchema()
-    d=s.load(data)
-    obj=s.serialize(d)
-    print(obj)
+    data=s.get_data(data)
+    print(data)
 except ValidationError as e:
     print(e)

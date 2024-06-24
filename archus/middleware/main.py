@@ -3,8 +3,6 @@ class Middleware:
         self.app = app
 
     def __call__(self, environ, start_response):
-        def custom_start_response(status, headers, exc_info=None):
-            return start_response(status, headers, exc_info)
 
-        response = self.app(environ, custom_start_response)
+        response = self.app(environ, start_response)
         return response

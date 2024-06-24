@@ -13,7 +13,7 @@ app.add_middleware(SecurityHeadersMiddleware)
 app.add_middleware(LoggingMiddleware)
 app.add_middleware(CORSMiddleware)
 
-@app.route('/', 'POST')
+@app.route('/', ['POST'])
 def index(request):
     f=FileHandler(request)
     files=f.get_files()
@@ -29,7 +29,7 @@ def index(request):
                     )
 
 
-@app.route('/test', 'GET')
+@app.route('/test', ['GET'])
 def test(request):
     data={
         "message":"hello"
@@ -37,28 +37,34 @@ def test(request):
     # raise ArchusException(message="user not exists!",status=HTTPStatus.NOT_FOUND)
     return Response(HTTPStatus.OK, data,content_type="application/json")
 
-@app.route('/home', 'GET')
+@app.route('/home', ['GET','POST'])
 def home_handler(request):
-    context = {
-        'title': 'Home Page',
-        'heading': 'Welcome to my Framework!',
-        'items': ['Item 1', 'Item 2', 'Item 3']
-    }
-    return {'template': 'index.html', 'context': context}
-
-@app.route('/submit', 'POST')
-def submit_handler(request):
-    name = request.form.get('name', 'Default Name')
-    # Process the form data and return a response
-    context = {
+    if request.method=='GET':
+        context = {
+            'title': 'Home Page',
+            'heading': 'Welcome to my Framework!',
+            'items': ['Item 1', 'Item 2', 'Item 3']
+        }
+        return {'template': 'index.html', 'context': context}
+    elif request.method=='POST':
+        name = request.form.get('name', 'Default Name')
+        context = {
         'title': 'Home Page',
         'heading': 'Welcome to my Framework!',
         'items': ['Item 1', 'Item 2', 'Item 3'],
         'name':name
-    }
-    return {'template': 'index.html', 'context': context}
+        }
+        return {'template': 'index.html', 'context': context}
 
-@app.route(r'/products/<product>/<user>', 'GET')
+@app.route('/about', ['GET'])
+def about(request):
+    return {'template': 'about.html'}
+
+@app.route('/submit', ['POST'])
+def submit_handler(request):
+    return app.redirect('/about')
+
+@app.route(r'/products/<product>/<user>', ['GET'])
 def get_product(request,product,user):
     # http://127.0.0.1:8000/products/123/utsav?product=yy7yy
     product_id = request.query_params.get('product')
@@ -75,5 +81,5 @@ def get_product(request,product,user):
     return Response(HTTPStatus.OK, data)
 
 if __name__ == '__main__':
-   app.server_forever()
+   app.run()
 

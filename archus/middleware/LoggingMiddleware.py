@@ -8,7 +8,7 @@ class LoggingMiddleware(Middleware):
         # print(f"Request: {environ['REQUEST_METHOD']} {environ['PATH_INFO']}")
 
         def custom_start_response(status, headers, exc_info=None):
-            print(f"Response status: {status}")
+            # print(f"Response status: {status}")
             return start_response(status, headers, exc_info)
 
         response=super().__call__(environ, custom_start_response)

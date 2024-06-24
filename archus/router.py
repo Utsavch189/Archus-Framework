@@ -12,16 +12,15 @@ class Router:
             path_pattern = path_pattern.rstrip('/') + '/?$'
         else:
             path_pattern = path_pattern + '/?$'
-
         path_regex = re.compile(f'^{path_pattern}$')
         self.routes.append((path_regex, method, handler))
 
     def handle_request(self, request):
         for path_regex, method, handler in self.routes:
             match = path_regex.match(request.path)
-            if match and request.method == method:
+            if match:
+                if (not request.method in method) and not request.headers.get('http_referer'):
+                    return Response(HTTPStatus.METHOD_NOT_ALLOWED, 'Method Not Allowed')
                 request.path_params = match.groupdict()
                 return handler(request,**request.path_params)
-            if match and request.method != method:
-                return Response(HTTPStatus.METHOD_NOT_ALLOWED, 'Method Not Allowed')
         return Response(HTTPStatus.NOT_FOUND, 'Not Found')

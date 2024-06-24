@@ -5,16 +5,21 @@ from typing import Union,Dict
 
 
 class Response:
-    def __init__(self, status:HTTPStatus, body:Union[Dict|str], content_type='text/plain'):
+    def __init__(self, status:HTTPStatus, body:Union[Dict|str], content_type='text/plain',headers:list=None):
         self.status = self.get_status_message(status)
         if content_type=="application/json" or type(body)==dict:
             self.body=self.toJson(body)
             self.headers = [('Content-Type', "application/json"),('Content-Length', str(len(self.body.encode('utf-8'))))]
-
+            if headers:
+                for h in headers:
+                    self.headers.append(h)
         else:
             self.body = body
             self.headers = [('Content-Type', content_type),('Content-Length', str(len(self.body)))]
-    
+            if headers:
+                for h in headers:
+                    self.headers.append(h)
+
     def __iter__(self):
         yield self.body
 
@@ -24,4 +29,4 @@ class Response:
         return status
     
     def toJson(self,body):
-        return json.dumps({**body , **{"timstamp":str(int(datetime.timestamp(datetime.now())))}})
+        return json.dumps({**body , **{"timestamp":str(int(datetime.timestamp(datetime.now())))}})

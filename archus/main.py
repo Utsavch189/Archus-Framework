@@ -1,13 +1,14 @@
 from .router import Router
 from .request import Request
 from .response import Response
-from jinja2 import Environment, FileSystemLoader, select_autoescape
+from jinja2 import Environment, FileSystemLoader, select_autoescape,TemplateNotFound
 from .status import HTTPStatus
 import mimetypes
 from archus.file_handlers import StaticFileHandler,MediaFileHandler
 from archus.middleware.GlobalExceptionMiddleware import GlobalExceptionHandlerMiddleware
 from archus.exceptions import ArchusException
 from archus.middleware import Middleware
+from datetime import datetime
 
 class Archus:
     def __init__(self,media_dir:str="media",static_dir:str="static",template_dir:str="templates"):
@@ -27,6 +28,13 @@ class Archus:
             self.router.add_route(path, method, handler)
             return handler
         return wrapper
+    
+    def register_blueprint(self, prefix, blueprint):
+        for route in blueprint:
+            route_path = route['path']
+            full_path = f"{prefix}{route_path}"
+            self.router.add_route(full_path, route['method'], route['handler'])
+        return self
 
     def add_middleware(self, middleware_cls:Middleware):
         self.middleware.append(middleware_cls)
@@ -36,8 +44,11 @@ class Archus:
             app = middleware_cls(app)
         return app
     
+    def redirect(self, location, status=HTTPStatus.FOUND):
+        header = [('Location', location),('redirection',True)]
+        return Response(status, '',content_type='text/html; charset=utf-8', headers=header)
 
-    def serve_static(self, request):
+    def _serve_static(self, request):
         filename = request.path.split('/')[len(request.path.split('/'))-1]
         content = self.static_handler.serve_file(filename)
         if content:
@@ -48,7 +59,7 @@ class Archus:
         else:
             return Response(HTTPStatus.NOT_FOUND, 'Not Found')
     
-    def serve_media(self, request):
+    def _serve_media(self, request):
         filename = request.path.split('/')[len(request.path.split('/'))-1]
         content = self.media_handler.serve_file(filename)
         if content:
@@ -60,24 +71,27 @@ class Archus:
             return Response(HTTPStatus.NOT_FOUND, 'Not Found')
 
 
-    def render_template(self, template_name, **context):
-        template = self.template_env.get_template(template_name)
-        rendered_content = template.render(**context).encode('utf-8')
-        return Response(HTTPStatus.OK, rendered_content, 'text/html; charset=utf-8')
+    def _render_template(self, template_name, **context):
+        try:
+            template = self.template_env.get_template(template_name)
+            rendered_content = template.render(**context).encode('utf-8')
+            return Response(HTTPStatus.OK, rendered_content, 'text/html; charset=utf-8')
+        except TemplateNotFound:
+            return Response(HTTPStatus.NOT_FOUND, 'Template Not Found')
     
     def _app(self,environ, start_response):
         try:
             request = Request(environ)
             if request.path.startswith('/static/'):
-                response = self.serve_static(request)
+                response = self._serve_static(request)
 
             elif request.path.startswith('/media/'):
-                response = self.serve_media(request)
+                response = self._serve_media(request)
 
             else:
                 response = self.router.handle_request(request)
                 if isinstance(response, dict) and 'template' in response:
-                    return self.render_template(response['template'], **response.get('context', {}))
+                    response=self._render_template(response['template'], **response.get('context', {}))
 
             start_response(response.status, response.headers)
 
@@ -96,19 +110,52 @@ class Archus:
         app = self._apply_middleware(self._app)
         return app(environ, start_response)
     
-    def server_forever(self):
+    def run(self,dev:bool=True,host:str="127.0.0.1",port:int=8000):
         import subprocess
+        if dev:
+            try:
+                command = [
+                    'pip', 
+                    'install', 
+                    'waitress'
+                ]
+                subprocess.run(command, check=True)
+            except subprocess.CalledProcessError as e:
+                print(str(e))
+            except Exception as e:
+                print(str(e))
 
-        command = [
-            'gunicorn', 
-            '-c', 
-            'gunicorn_config.py',  
-            'app:app' 
-        ]
-    
-        try:
-            subprocess.run(command, check=True)
-        except subprocess.CalledProcessError as e:
-            print(f"Error running Gunicorn: {e}")
-        except KeyboardInterrupt:
-            exit()
+            from waitress import serve
+
+            try:
+                print(f"Dev Server Running on http://{host}:{port} at {datetime.now()}")
+                serve(self,host=host,port=port)
+            except Exception as e:
+                print(e)
+
+        else:
+            try:
+                command = [
+                    'pip', 
+                    'install', 
+                    'gunicorn'
+                ]
+                subprocess.run(command, check=True)
+            except subprocess.CalledProcessError as e:
+                print(str(e))
+            except Exception as e:
+                print(str(e))
+
+            command = [
+                'gunicorn', 
+                '-c', 
+                'gunicorn_config.py',  
+                'app:application' 
+            ]
+
+            try:
+                subprocess.run(command, check=True)
+            except subprocess.CalledProcessError as e:
+                print(f"Error running Gunicorn: {e}")
+            except KeyboardInterrupt:
+                exit()

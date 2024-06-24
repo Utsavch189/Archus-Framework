@@ -17,7 +17,7 @@ class ThrottleMiddleWare(Middleware):
         self.cleanup_expired_requests()
         
         client_ip = environ.get('REMOTE_ADDR', '')  # Get client IP
-        print(self.client_requests)
+        # print(self.client_requests)
         current_time = time.time()
 
         if len(self.client_requests[client_ip]) >= self.max_requests:
