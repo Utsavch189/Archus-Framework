@@ -1,5 +1,5 @@
 from archus import Archus
-from archus.middleware import LoggingMiddleware, SecurityHeadersMiddleware,CORSMiddleware,ThrottleMiddleWare
+from archus.middleware import LoggingMiddleware, SecurityHeadersMiddleware,CORSMiddleware,ThrottleMiddleWare,GlobalExceptionHandlerMiddleware
 
 from app.api.v1.routes import v1_urls
 from app.api.v2.routes import v2_urls
@@ -8,10 +8,10 @@ from app.templating.routes import urls
 application = Archus()
 
 application.add_middleware(SecurityHeadersMiddleware)
-application.add_middleware(ThrottleMiddleWare)
 application.add_middleware(CORSMiddleware)
 application.add_middleware(LoggingMiddleware)
-
+application.add_middleware(ThrottleMiddleWare)
+application.add_middleware(GlobalExceptionHandlerMiddleware)
 
 
 application.register_blueprint("/api/v1",v1_urls)

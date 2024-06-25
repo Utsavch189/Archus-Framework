@@ -29,4 +29,4 @@ class Response:
         return status
     
     def toJson(self,body):
-        return json.dumps({**body , **{"timestamp":str(int(datetime.timestamp(datetime.now())))}})
+        return json.dumps({**body , **{"timestamp":str(int(datetime.timestamp(datetime.now()))),"status":self.status}})

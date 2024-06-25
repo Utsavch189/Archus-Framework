@@ -10,10 +10,28 @@ from archus.exceptions import ArchusException
 from archus.middleware import Middleware
 from datetime import datetime
 
+import os,sys
+
+root_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))
+sys.path.append(root_dir)
+
+try:
+    import config
+except Exception as e:
+    print(e)
+
 class Archus:
-    def __init__(self,media_dir:str="media",static_dir:str="static",template_dir:str="templates"):
+    def __init__(self):
         self.router = Router()
         self.middleware = []
+
+        if config.KEY=="":
+            raise Exception("Application Key Not Found!")
+        
+        static_dir=config.STATIC_DIR or "static"
+        media_dir=config.MEDIA_DIR or "media"
+        template_dir=config.TEMPLATE_DIR or "templates"
+
         self.template_env = Environment(
             loader=FileSystemLoader(template_dir),
             autoescape=select_autoescape(['html', 'xml'])
@@ -21,7 +39,7 @@ class Archus:
 
         self.static_handler=StaticFileHandler(static_dir)
         self.media_handler=MediaFileHandler(media_dir)
-        self.middleware.append(GlobalExceptionHandlerMiddleware)
+        # self.middleware.append(GlobalExceptionHandlerMiddleware)
 
     def route(self, path:str, method:str):
         def wrapper(handler):

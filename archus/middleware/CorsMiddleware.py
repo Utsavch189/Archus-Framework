@@ -1,11 +1,20 @@
 from archus.middleware.main import Middleware
+import os,sys
+
+root_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))
+sys.path.append(root_dir)
+
+try:
+    import config
+except Exception as e:
+    print(e)
 
 class CORSMiddleware(Middleware):
     def __init__(self, app, allowed_origins=None, allowed_methods=None, allowed_headers=None):
         super().__init__(app)
-        self.allowed_origins = allowed_origins or ['*']
-        self.allowed_methods = allowed_methods or ['GET', 'POST', 'OPTIONS','PUT','DELETE','PATCH']
-        self.allowed_headers = allowed_headers or ['Content-Type']
+        self.allowed_origins = config.ALLOWED_ORIGINS #or ['*']
+        self.allowed_methods = config.ALLOWED_METHODS #or ['GET', 'POST', 'OPTIONS','PUT','DELETE','PATCH']
+        self.allowed_headers = config.ALLOWED_HEADERS #or ['Content-Type']
 
     def __call__(self, environ, start_response):
         def custom_start_response(status, headers, exc_info=None):
