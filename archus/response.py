@@ -1,11 +1,10 @@
 from .status import HTTPStatus
 import json
 from datetime import datetime
-from typing import Union,Dict
 
 
 class Response:
-    def __init__(self, status:HTTPStatus, body:Union[Dict|str], content_type='text/plain',headers:list=None):
+    def __init__(self, status:HTTPStatus, body, content_type='text/plain',headers:list=None):
         self.status = self.get_status_message(status)
         if content_type=="application/json" or type(body)==dict:
             self.body=self.toJson(body)

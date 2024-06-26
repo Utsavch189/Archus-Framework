@@ -1,6 +1,8 @@
 from archus.serializer.field import Field
 from archus.serializer.validation_error import ValidationError
 import json
+from archus.exceptions import ArchusException
+from archus.status import HTTPStatus
 
 class ArchusSerializer:
     def __init__(self, **fields):
@@ -40,7 +42,7 @@ class ArchusSerializer:
                 validated_data[field_name] = validated_value
             return validated_data
         else:
-            return self.errors
+            raise ArchusException(status=HTTPStatus.UNPROCESSABLE_ENTITY,message=self.errors)
 
     def serialize(self, data):
         validated_data = self.validated_data(data)
@@ -48,4 +50,4 @@ class ArchusSerializer:
 
     def deserialize(self, data):
         parsed_data = json.loads(data)
-        return self.validate(parsed_data)
+        return self.validated_data(parsed_data)

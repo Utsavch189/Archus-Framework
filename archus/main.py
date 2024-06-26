@@ -5,7 +5,7 @@ from jinja2 import Environment, FileSystemLoader, select_autoescape,TemplateNotF
 from .status import HTTPStatus
 import mimetypes
 from archus.file_handlers import StaticFileHandler,MediaFileHandler
-from archus.middleware.GlobalExceptionMiddleware import GlobalExceptionHandlerMiddleware
+from archus.middleware.order_middleware import check_middleware_stack
 from archus.exceptions import ArchusException
 from archus.middleware import Middleware
 from datetime import datetime
@@ -39,7 +39,7 @@ class Archus:
 
         self.static_handler=StaticFileHandler(static_dir)
         self.media_handler=MediaFileHandler(media_dir)
-        # self.middleware.append(GlobalExceptionHandlerMiddleware)
+
 
     def route(self, path:str, method:str):
         def wrapper(handler):
@@ -56,6 +56,8 @@ class Archus:
 
     def add_middleware(self, middleware_cls:Middleware):
         self.middleware.append(middleware_cls)
+        if self.middleware:
+            check_middleware_stack(self.middleware)
 
     def _apply_middleware(self, app):
         for middleware_cls in reversed(self.middleware):

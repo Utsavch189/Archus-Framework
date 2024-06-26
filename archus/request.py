@@ -75,7 +75,7 @@ class Request:
     def _parse_json(self,environ):
         if environ.get('CONTENT_TYPE', '').startswith('application/json'):
             try:
-                return json.loads(self.body.decode())
+                return self.body.decode()
             except ValueError:
                 return None
         return None

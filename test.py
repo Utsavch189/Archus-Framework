@@ -178,6 +178,12 @@ class UserSerializer(Serializer):
             address=Field(required=True, data_type=list, validator=self.validate_address_list),
             created_at=Field(required=False, data_type=str, default=datetime.now().isoformat())
         )
+    
+    def serialize(self, data):
+        return super().serialize(data)
+    
+    def deserialize(self, data):
+        return super().deserialize(data)
 
 # Example usage
 serializer = UserSerializer()
@@ -199,11 +205,11 @@ data = {
 # Serialize the data
 
     
-if serializer.is_valid(data):
-    serialized_data = serializer.serialize(data)
-    print("Serialized data:", serialized_data)
-else:
-    print("errors : ",serializer.errors)
+# if serializer.is_valid(data):
+#     serialized_data = serializer.serialize(data)
+#     print("Serialized data:", serialized_data)
+# else:
+#     print("errors : ",serializer.errors)
 
 # Deserialize the data
 # try:
@@ -212,3 +218,41 @@ else:
 # except ValidationError as e:
 #     print(f"Validation error for field '{e.field_name}': {e}")
 
+data=[]
+
+class A:
+    pass
+
+class B:
+    pass
+
+class C:
+    pass
+
+def correct_order():
+        return {
+            A:1,
+            B:2,
+            C:3
+        }
+    
+
+
+
+data.append(B)
+data.append(C)
+data.append(A)
+
+order=correct_order()
+
+prev_seq=0
+
+for d in data:
+    seq_no=order[d]
+    print(seq_no)
+
+    if seq_no<prev_seq:
+        print(f"{d} is missplaced")
+        break
+
+    prev_seq=seq_no
