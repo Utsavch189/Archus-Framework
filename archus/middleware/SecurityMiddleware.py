@@ -10,7 +10,6 @@ class SecurityHeadersMiddleware(Middleware):
             headers.append(('X-Frame-Options', 'DENY'))
             headers.append(('X-XSS-Protection', '1; mode=block'))
             headers.append(('Strict-Transport-Security', 'max-age=31536000; includeSubDomains'))
-            headers.append(('Content-Security-Policy', "default-src 'self'"))
             return start_response(status, headers, exc_info)
         
         response=super().__call__(environ, custom_start_response)

@@ -3,4 +3,5 @@ from archus.middleware.GlobalExceptionMiddleware import GlobalExceptionHandlerMi
 from archus.middleware.LoggingMiddleware import LoggingMiddleware
 from archus.middleware.CorsMiddleware import CORSMiddleware
 from archus.middleware.ThrottleMiddleware import ThrottleMiddleWare
+from archus.middleware.CSPMiddleWare import CSPMiddleware
 from archus.middleware.main import Middleware

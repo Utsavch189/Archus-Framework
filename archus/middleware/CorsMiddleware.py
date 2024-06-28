@@ -14,7 +14,7 @@ class CORSMiddleware(Middleware):
         super().__init__(app)
         self.allowed_origins = config.ALLOWED_ORIGINS #or ['*']
         self.allowed_methods = config.ALLOWED_METHODS #or ['GET', 'POST', 'OPTIONS','PUT','DELETE','PATCH']
-        self.allowed_headers = config.ALLOWED_HEADERS #or ['Content-Type']
+        self.allowed_headers = config.ALLOWED_HEADERS  #or ['Content-Type']
 
     def __call__(self, environ, start_response):
         def custom_start_response(status, headers, exc_info=None):

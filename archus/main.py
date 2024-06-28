@@ -9,6 +9,7 @@ from archus.middleware.order_middleware import check_middleware_stack
 from archus.exceptions import ArchusException
 from archus.middleware import Middleware
 from datetime import datetime
+from archus.docs import index
 
 import os,sys
 
@@ -24,6 +25,13 @@ class Archus:
     def __init__(self):
         self.router = Router()
         self.middleware = []
+        self.dir=None
+        
+        self.router.add_route(
+            path="/docs",
+            method=['GET'],
+            handler=index
+        )
 
         if config.KEY=="":
             raise Exception("Application Key Not Found!")
@@ -56,8 +64,8 @@ class Archus:
 
     def add_middleware(self, middleware_cls:Middleware):
         self.middleware.append(middleware_cls)
-        if self.middleware:
-            check_middleware_stack(self.middleware)
+        # if self.middleware:
+        #     check_middleware_stack(self.middleware)
 
     def _apply_middleware(self, app):
         for middleware_cls in reversed(self.middleware):
@@ -91,8 +99,18 @@ class Archus:
             return Response(HTTPStatus.NOT_FOUND, 'Not Found')
 
 
-    def _render_template(self, template_name, **context):
+    def _render_template(self, template_name,dir=None, **context):
         try:
+
+            if dir:
+                template_env = Environment(
+                    loader=FileSystemLoader(dir),
+                    autoescape=select_autoescape(['html', 'xml'])
+                )
+                template = template_env.get_template(template_name)
+                rendered_content = template.render(**context).encode('utf-8')
+                return Response(HTTPStatus.OK, rendered_content, 'text/html; charset=utf-8')
+        
             template = self.template_env.get_template(template_name)
             rendered_content = template.render(**context).encode('utf-8')
             return Response(HTTPStatus.OK, rendered_content, 'text/html; charset=utf-8')
@@ -112,6 +130,9 @@ class Archus:
                 response = self.router.handle_request(request)
                 if isinstance(response, dict) and 'template' in response:
                     response=self._render_template(response['template'], **response.get('context', {}))
+
+                else:
+                    response=self._render_template(response['docs'],dir="archus/docs", **response.get('context', {}))
 
             start_response(response.status, response.headers)
 
