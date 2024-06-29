@@ -20,8 +20,10 @@ Install Archus via pip:
 
 ```sh
 pip install archus
+```
 
 ## Create Your First Project
 
 ```sh
 archus createproject your_project_name
+```
