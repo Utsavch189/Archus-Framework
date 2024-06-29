@@ -33,9 +33,10 @@ def create_project_structure(project_name):
         f"{project_name}/app/templating/routes.py",
         f"{project_name}/app/templating/service.py",
         f"{project_name}/config.py",
-        f"{project_name}/app/static/.gitkeep",
-        f"{project_name}/app/templates/.gitkeep",
-        f"{project_name}/app/media/.gitkeep",
+        f"{project_name}/run.py",
+        f"{project_name}/static/.gitkeep",
+        f"{project_name}/templates/index.html",
+        f"{project_name}/media/.gitkeep",
     ]
 
     file_contents=[
@@ -46,7 +47,7 @@ def create_project_structure(project_name):
 
         # f"{project_name}/app/app.py"
         '''
-        from archus import Archus\nfrom archus.middleware import LoggingMiddleware, SecurityHeadersMiddleware,CORSMiddleware,ThrottleMiddleWare,GlobalExceptionHandlerMiddleware
+        from archus import Archus\nfrom archus.middleware import LoggingMiddleware, SecurityHeadersMiddleware,CORSMiddleware,GlobalExceptionHandlerMiddleware
 
         \nfrom app.api.v1.routes import v1_urls\nfrom app.templating.routes import urls
 
@@ -113,25 +114,33 @@ def create_project_structure(project_name):
         # SERVER KEY\n\n"SECRET KEY.USE YOUR RANDOM KEY FOR SECURITY."\nKEY="928635e70a014b41bfd38a66cf6a1939"\n\n# SMTP\n"SMTP_USE_TLS=True WILL AUTOMATICALLY DETECT PORT 587.SMTP_USE_SSL=TRUE WILL AUTOMATICALLY DETECT PORT 465."\n\nSMTP_SERVER = 'smtp.gmail.com'\nSMTP_USE_TLS=True\nSMTP_USE_SSL=False\nSMTP_USERNAME = 'utsavpokemon9000chatterjee@gmail.com'\nSMTP_PASSWORD = 'nzlettvkyviafplp'\n\n# CORS\nALLOWED_ORIGINS=['*']\nALLOWED_METHODS=[ 'POST', 'OPTIONS','PUT','DELETE','PATCH']\nALLOWED_HEADERS=['Content-Type']\n\n# Throttling\nMAX_REQUESTS=10\nPERIOD=60 # Seconds\n\n# Dirs\nTEMPLATE_DIR="templates"\nSTATIC_DIR="static"\nMEDIA_DIR="media"\nLOG_DIR="log"
         ''',
 
-        # f"{project_name}/app/static/.gitkeep"
+        # f"{project_name}/run.py"
+        '''
+        from app import application\n\nif __name__=="__main__":\n\tapplication.run()
+        '''
+        
+        # f"{project_name}/static/.gitkeep"
         '''
 
         ''',
 
-        # f"{project_name}/app/templates/.gitkeep"
+        # f"{project_name}/templates/.gitkeep"
         '''
 
         ''',
 
-        # f"{project_name}/app/media/.gitkeep"
+        # f"{project_name}/media/.gitkeep"
         '''
 
         '''
     ]
     
     for i in range(0,len(init_files)):
-        with open(init_files[i], 'w') as f:
-            f.write(file_contents[i].strip())
+        try:
+            with open(init_files[i], 'w') as f:
+                f.write(file_contents[i].strip())
+        except:
+            continue
 
     print(f"Project '{project_name}' created successfully!")
 

@@ -125,6 +125,9 @@ class Archus:
 
             elif request.path.startswith('/media/'):
                 response = self._serve_media(request)
+            
+            elif request.path == '/favicon.ico': 
+                response = self._serve_static(request)
 
             else:
                 response = self.router.handle_request(request)

@@ -17,7 +17,7 @@ SMTP_PASSWORD = 'nzlettvkyviafplp'
 # CORS
 ALLOWED_ORIGINS=['*']
 ALLOWED_METHODS=[ 'POST', 'OPTIONS','PUT','DELETE','PATCH']
-ALLOWED_HEADERS=['Content-Type','Authorization']
+ALLOWED_HEADERS=['Content-Type']
 
 # Throttling
 MAX_REQUESTS=10
