@@ -111,7 +111,7 @@ def create_project_structure(project_name):
 
         # f"{project_name}/config.py"
         '''
-        # SERVER KEY\n\n"SECRET KEY.USE YOUR RANDOM KEY FOR SECURITY."\nKEY="928635e70a014b41bfd38a66cf6a1939"\n\n# SMTP\n"SMTP_USE_TLS=True WILL AUTOMATICALLY DETECT PORT 587.SMTP_USE_SSL=TRUE WILL AUTOMATICALLY DETECT PORT 465."\n\nSMTP_SERVER = 'smtp.gmail.com'\nSMTP_USE_TLS=True\nSMTP_USE_SSL=False\nSMTP_USERNAME = 'utsavpokemon9000chatterjee@gmail.com'\nSMTP_PASSWORD = 'nzlettvkyviafplp'\n\n# CORS\nALLOWED_ORIGINS=['*']\nALLOWED_METHODS=[ 'POST', 'OPTIONS','PUT','DELETE','PATCH']\nALLOWED_HEADERS=['Content-Type']\n\n# Throttling\nMAX_REQUESTS=10\nPERIOD=60 # Seconds\n\n# Dirs\nTEMPLATE_DIR="templates"\nSTATIC_DIR="static"\nMEDIA_DIR="media"\nLOG_DIR="log"
+        # SERVER KEY\n\n"SECRET KEY.USE YOUR RANDOM KEY FOR SECURITY."\nKEY="928635e70a014b41bfd38a66cf6a1939"\n\n# SMTP\n"SMTP_USE_TLS=True WILL AUTOMATICALLY DETECT PORT 587.SMTP_USE_SSL=TRUE WILL AUTOMATICALLY DETECT PORT 465."\n\nSMTP_SERVER = ''\nSMTP_USE_TLS=True\nSMTP_USE_SSL=False\nSMTP_USERNAME = ''\nSMTP_PASSWORD = ''\n\n# CORS\nALLOWED_ORIGINS=['*']\nALLOWED_METHODS=[ 'POST', 'OPTIONS','PUT','DELETE','PATCH']\nALLOWED_HEADERS=['Content-Type']\n\n# Throttling\nMAX_REQUESTS=10\nPERIOD=60 # Seconds\n\n# Dirs\nTEMPLATE_DIR="templates"\nSTATIC_DIR="static"\nMEDIA_DIR="media"\nLOG_DIR="log"
         ''',
 
         # f"{project_name}/run.py"
