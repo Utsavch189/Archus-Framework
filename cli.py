@@ -23,7 +23,7 @@ def create_project_structure(project_name):
     init_files = [
         f"{project_name}/app/__init__.py",
         f"{project_name}/app/app.py",
-        f"{project_name}/app/gunicorn_config.py",
+        f"{project_name}/gunicorn_config.py",
         f"{project_name}/app/api/__init__.py",
         f"{project_name}/app/api/v1/__init__.py",
         f"{project_name}/app/api/v1/routes.py",
@@ -59,7 +59,7 @@ def create_project_structure(project_name):
         '''
         ,
 
-        # f"{project_name}/app/gunicorn_config.py"
+        # f"{project_name}/gunicorn_config.py"
         '''
         bind = '0.0.0.0:8000'  # Bind to localhost on port 8000\nworkers = 4  # Number of worker processes\nworker_connections = 1000  # Number of connections per worker\ntimeout = 30  # Timeout for handling requests
         ''',

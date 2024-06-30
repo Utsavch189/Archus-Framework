@@ -154,21 +154,9 @@ class Archus:
         app = self._apply_middleware(self._app)
         return app(environ, start_response)
     
-    def run(self,dev:bool=True,host:str="127.0.0.1",port:int=8000):
+    def run(self,dev:bool=True,host:str="127.0.0.1",port:int=8000,gunicron_command:list=['gunicorn','-c', 'gunicorn_config.py',  'app:application' ]):
         import subprocess
         if dev:
-            try:
-                command = [
-                    'pip', 
-                    'install', 
-                    'waitress'
-                ]
-                subprocess.run(command, check=True)
-            except subprocess.CalledProcessError as e:
-                print(str(e))
-            except Exception as e:
-                print(str(e))
-
             from waitress import serve
 
             try:
@@ -179,26 +167,7 @@ class Archus:
 
         else:
             try:
-                command = [
-                    'pip', 
-                    'install', 
-                    'gunicorn'
-                ]
-                subprocess.run(command, check=True)
-            except subprocess.CalledProcessError as e:
-                print(str(e))
-            except Exception as e:
-                print(str(e))
-
-            command = [
-                'gunicorn', 
-                '-c', 
-                'gunicorn_config.py',  
-                'app:application' 
-            ]
-
-            try:
-                subprocess.run(command, check=True)
+                subprocess.run(gunicron_command, check=True)
             except subprocess.CalledProcessError as e:
                 print(f"Error running Gunicorn: {e}")
             except KeyboardInterrupt:
