@@ -76,7 +76,7 @@ def create_project_structure(project_name):
 
         # f"{project_name}/app/api/v1/routes.py"
         '''
-        from .service import index\n\nurls=[
+        from .service import index\n\nv1_urls=[
         {'path': '/', 'method': ['GET'], 'handler': index}
     ]
         ''',
