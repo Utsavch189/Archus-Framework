@@ -64,8 +64,8 @@ class Archus:
 
     def add_middleware(self, middleware_cls:Middleware):
         self.middleware.append(middleware_cls)
-        # if self.middleware:
-        #     check_middleware_stack(self.middleware)
+        if self.middleware:
+            check_middleware_stack(self.middleware)
 
     def _apply_middleware(self, app):
         for middleware_cls in reversed(self.middleware):
@@ -134,7 +134,7 @@ class Archus:
                 if isinstance(response, dict) and 'template' in response:
                     response=self._render_template(response['template'], **response.get('context', {}))
 
-                else:
+                elif isinstance(response, dict) and 'docs' in response:
                     response=self._render_template(response['docs'],dir="archus/docs", **response.get('context', {}))
 
             start_response(response.status, response.headers)
