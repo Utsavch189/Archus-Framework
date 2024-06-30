@@ -16,6 +16,7 @@ class Request:
         self.form = self._parse_form(environ)
         self.files = self._parse_files(environ)
         self.json = self._parse_json(environ)
+        self.data = self._parse_data(environ)
 
     def _parse_all_headers(self, environ):
         headers = {}
@@ -76,6 +77,14 @@ class Request:
         if environ.get('CONTENT_TYPE', '').startswith('application/json'):
             try:
                 return self.body.decode()
+            except ValueError:
+                return None
+        return None
+    
+    def _parse_data(self,environ):
+        if environ.get('CONTENT_TYPE', '').startswith('application/json'):
+            try:
+                return json.loads(self.body.decode())
             except ValueError:
                 return None
         return None
