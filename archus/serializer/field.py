@@ -7,9 +7,10 @@ class Field:
         self.default = default
         self.validator=validator
 
-    def validate(self, value, field_name):
-        if self.required and value is None:
-            raise ValidationError(f"The field '{field_name}' is required.",field_name)
+    def validate(self, value, field_name,partial=False):
+        if not partial:
+            if self.required and value is None:
+                raise ValidationError(f"The field '{field_name}' is required.",field_name)
         if self.data_type and value is not None and not isinstance(value, self.data_type):
             raise ValidationError(f"Invalid data type for field '{field_name}'. Expected {self.data_type.__name__}.", field_name)
 
