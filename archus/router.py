@@ -1,6 +1,9 @@
 import re
 from .response import Response
 from .status import HTTPStatus
+from inspect import signature
+from .serializer import ArchusSerializer
+from .exceptions import ArchusException
 
 class Router:
     def __init__(self):
@@ -22,5 +25,26 @@ class Router:
                 if (not request.method in method) and not request.headers.get('http_referer'):
                     return Response(HTTPStatus.METHOD_NOT_ALLOWED, 'Method Not Allowed')
                 request.path_params = match.groupdict()
-                return handler(request,**request.path_params)
+                try:
+                    dependencies = self._resolve_dependencies(handler, request)
+                    return handler(request, **dependencies, **request.path_params)
+                except ArchusException as e:
+                    return Response(status=e.status, body=e.to_dict())
+                except Exception as e:
+                    return Response(
+                                status=HTTPStatus.INTERNAL_SERVER_ERROR,
+                                body={"type": "Internal Server Error","message":str(e)},
+                                content_type="application/json"
+                            )
         return Response(HTTPStatus.NOT_FOUND, 'Not Found')
+    
+    def _resolve_dependencies(self, handler,request):
+        dependencies = {}
+        sig = signature(handler)
+        for param in sig.parameters.values():
+            if issubclass(param.annotation,ArchusSerializer):
+                serializer_class = param.annotation
+                serializer=serializer_class()
+                data=serializer.deserialize(request.json)
+                dependencies[param.name]=data
+        return dependencies
