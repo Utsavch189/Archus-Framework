@@ -138,7 +138,10 @@ class Archus:
 
                 elif isinstance(_response, dict) and 'docs' in _response:
                     _response=self._render_template(_response['docs'],dir="archus/docs", **_response.get('context', {}))
-
+                
+                elif isinstance(_response, dict) and 'location' in _response:
+                    _response=self.redirect(location=_response['location'])
+            
             start_response(_response.status, _response.headers)
 
             if type(_response.body)==str:
