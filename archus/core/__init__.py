@@ -1,0 +1,1 @@
+from archus.core.dependency import resolve_handler_dependencies
