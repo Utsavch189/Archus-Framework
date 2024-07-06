@@ -154,5 +154,5 @@ def main():
     if args.command == 'createproject':
         create_project_structure(args.project_name)
 
-if __name__ == '__main__':
+if __name__=="__main__":
     main()
