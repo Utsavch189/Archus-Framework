@@ -4,97 +4,144 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MyFramework Documentation</title>
+    <title>Archus Documentation</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css" />
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
-
+    <style>
+        /* Add your custom styles here if needed */
+    </style>
 </head>
 
-<body>
-    <span class="absolute text-white text-4xl top-5 left-4 cursor-pointer" onclick="openSidebar()">
-        <i class="bi bi-filter-left px-2 bg-gray-900 rounded-md"></i>
-    </span>
-    <div class="sidebar fixed top-0 bottom-0 lg:left-0 p-2 w-[300px] overflow-y-auto text-center bg-gray-900">
-        <div class="text-gray-100 text-xl">
-            <div class="p-2.5 mt-1 flex items-center">
-                <i class="bi bi-app-indicator px-2 py-1 rounded-md bg-blue-600"></i>
-                <h1 class="font-bold text-gray-200 text-[15px] ml-3">TailwindCSS</h1>
-                <i class="bi bi-x cursor-pointer ml-28 lg:hidden" onclick="openSidebar()"></i>
-            </div>
-            <div class="my-2 bg-gray-600 h-[1px]"></div>
+<body class="bg-gray-100 font-sans leading-normal tracking-normal">
+    <nav class="bg-blue-800 p-4">
+        <div class="container mx-auto">
+            <a href="#" class="text-white text-lg font-bold">Archus Documentation</a>
         </div>
-        <div class="p-2.5 flex items-center rounded-md px-4 duration-300 cursor-pointer bg-gray-700 text-white">
-            <i class="bi bi-search text-sm"></i>
-            <input type="text" placeholder="Search" class="text-[15px] ml-4 w-full bg-transparent focus:outline-none" />
-        </div>
-        <div
-            class="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-blue-600 text-white">
-            <i class="fa fa-home"></i>            
-            <span class="text-[15px] ml-4 text-gray-200 font-bold">Quick Start</span>
-        </div>
-        <div
-            class="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-blue-600 text-white">
-            <i class="fa-brands fa-connectdevelop"></i>            
-            <span class="text-[15px] ml-4 text-gray-200 font-bold">API</span>
-        </div>
-        <div
-            class="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-blue-600 text-white">
-            <i class="fa-brands fa-html5"></i>
-            <span class="text-[15px] ml-4 text-gray-200 font-bold">Templates</span>
-        </div>
-        <div class="my-4 bg-gray-600 h-[1px]"></div>
-        <!-- <div class="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-blue-600 text-white"
-            onclick="dropdown()">
-            <i class="bi bi-chat-left-text-fill"></i>
-            <div class="flex justify-between w-full items-center">
-                <span class="text-[15px] ml-4 text-gray-200 font-bold">Chatbox</span>
-                <span class="text-sm rotate-180" id="arrow">
-                    <i class="bi bi-chevron-down"></i>
-                </span>
+    </nav>
+
+    <div class="flex flex-wrap">
+        <div class="w-full md:w-1/4 bg-white p-4">
+            <div class="sticky top-0">
+                <h2 class="text-xl font-bold mb-4">Table of Contents</h2>
+                <ul class="list-disc list-inside">
+                    <li><a href="#introduction" class="text-blue-800 hover:underline">Introduction</a></li>
+                    <li><a href="#installation" class="text-blue-800 hover:underline">Installation</a></li>
+                    <li><a href="#usage" class="text-blue-800 hover:underline">Usage</a></li>
+                    <li><a href="#features" class="text-blue-800 hover:underline">Features</a></li>
+                    <li><a href="#examples" class="text-blue-800 hover:underline">Examples</a></li>
+                </ul>
             </div>
         </div>
-        <div class="text-left text-sm mt-2 w-4/5 mx-auto text-gray-200 font-bold" id="submenu">
-            <h1 class="cursor-pointer p-2 hover:bg-blue-600 rounded-md mt-1">
-                Social
-            </h1>
-            <h1 class="cursor-pointer p-2 hover:bg-blue-600 rounded-md mt-1">
-                Personal
-            </h1>
-            <h1 class="cursor-pointer p-2 hover:bg-blue-600 rounded-md mt-1">
-                Friends
-            </h1>
-        </div> -->
-        <div
-            class="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-blue-600 text-white">
-            <i class="fa-solid fa-circle-exclamation"></i>
-            <span class="text-[15px] ml-4 text-gray-200 font-bold">Exceptions</span>
-        </div>
 
-        <div
-            class="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-blue-600 text-white">
-            <i class="fa-solid fa-key"></i>
-            <span class="text-[15px] ml-4 text-gray-200 font-bold">Middlewares</span>
-        </div>
+        <div class="w-full md:w-3/4 p-4">
+            <section id="introduction">
+                <h2 class="text-2xl font-bold mb-4">Introduction</h2>
+                <p>Welcome to the Archus documentation. Archus is a Python web framework that provides an easy and
+                    efficient way to build web applications.</p>
+            </section>
 
-        <div
-            class="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-blue-600 text-white">
-            <i class="fa-solid fa-circle-check"></i>            <span class="text-[15px] ml-4 text-gray-200 font-bold">Serializer & Data validation</span>
+            <section id="installation">
+                <h2 class="text-2xl font-bold mb-4">Installation</h2>
+                <p>To install Archus, run the following command:</p>
+                <pre class="bg-gray-200 p-4 rounded"><code>pip install archus</code></pre>
+            </section>
+
+            <section id="usage">
+                <h2 class="text-2xl font-bold mb-4">Usage</h2>
+                <p>Here's how you can create a new project using Archus:</p>
+                <pre class="bg-gray-200 p-4 rounded"><code>python -m archus createproject my_project</code></pre>
+            </section>
+
+            <section id="features">
+                <h2 class="text-2xl font-bold mb-4">Features</h2>
+                <ul class="list-disc list-inside">
+                    <li>Routing</li>
+                    <li>Middleware support</li>
+                    <li>Easily Create REST Api's</li>
+                    <li>Templating</li>
+                    <li>Static and media files handling</li>
+                    <li>CORS</li>
+                    <li>Security headers</li>
+                    <li>Global exception handling</li>
+                    <li>Serializing</li>
+                </ul>
+            </section>
+
+            <section id="examples">
+                <h2 class="text-2xl font-bold mb-4">Examples</h2>
+                <p>Here are some examples to help you get started with Archus.</p>
+                <!-- Add example code snippets here -->
+                 <!-- Project Structure -->
+                 <h3 class="text-xl font-bold mb-2">Project Structure</h3>
+                 <pre class="bg-gray-200 p-4 rounded"><code>
+                    ├── app
+                    │   ├── api
+                    │   │   ├── __init__.py
+                    │   │   └── v1
+                    │   │       ├── __init__.py
+                    │   │       ├── routes.py
+                    │   │       ├── serializer.py
+                    │   │       └── service.py
+                    │   ├── app.py
+                    │   ├── __init__.py
+                    │   └── templating
+                    │       ├── __init__.py
+                    │       ├── routes.py
+                    │       └── service.py
+                    ├── config.py
+                    ├── gunicorn_config.py
+                    ├── media
+                    ├── run.py
+                    ├── static
+                    └── templates
+                        └── index.html
+                 </code></pre>
+                 <section id="features">
+                    <h3 class="text-2xl font-bold mb-4">app directory</h3>
+                    <ul class="list-disc list-inside">
+                        <li><b>app.py</b> contains application instance and all routing and middleware setups.</li>
+                        <li><b>api</b> directory contains rest api implementations with versioning.</br><pre>  Each version folders [ex. <b>v1</b>] must have routes and service files and may have serializer file.</pre> </li>
+                        <li><b>routes.py</b> file contains routing path with http methods and request handlers from it's service.py</li>
+                        <li><b>service.py</b> file contains business logics with request handlers which are registered in routes.py</li>
+                        <li><b>serializer.py</b> file may contains <b>ArchusSerializer</b>, which can deserialize the incoming json data with validation and vice-versa.</li>
+                        <li><b>templating</b> directory contains the implementations for template serving.</li>
+                        <li><b>route.py & service.py</b> both acts as same as <b>api</b> directory.</li>
+                    </ul>
+                    <h3 class="text-2xl font-bold mb-4">config.py</h3>
+                    <ul class="list-disc list-inside">
+                        <li>All kind of project configuration.</li>
+                    </ul>
+                    <h3 class="text-2xl font-bold mb-4">gunicorn_config.py</h3>
+                    <ul class="list-disc list-inside">
+                        <li>If your application is running on gunicorn , it may contains configuration for gunicorn.</li>
+                    </ul>
+
+                    <h3 class="text-2xl font-bold mb-4">templates</h3>
+                    <ul class="list-disc list-inside">
+                        <li>Contains all of html files that are served by <b>service.py of app/templating directory</b>.</li>
+                    </ul>
+
+                    <h3 class="text-2xl font-bold mb-4">static</h3>
+                    <ul class="list-disc list-inside">
+                        <li>Contains all css and javascript files for the html files of templates directory.<br><pre><b>  While including css or js files from static folder your path must be like, </br> '/static/style.css' or '/static/index.js'</b></pre></li>
+                    </ul>
+
+                    <h3 class="text-2xl font-bold mb-4">media</h3>
+                    <ul class="list-disc list-inside">
+                        <li>Contains the media files and must have served by <b>'url/media/file'</b>, it means '/media' prefix before file name.</li>
+                    </ul>
+
+                    <h3 class="text-2xl font-bold mb-4">run.py</h3>
+                    <ul class="list-disc list-inside">
+                        <li><b>python3 run.py</b> will run your application. </br><pre><b>  dev=False in application.run() will active gunicorn server and dev=True will active dev server.</b></pre></li>
+                    </ul>
+                </section>
+
+                <h3 class="text-xl font-bold mb-2">Simple Route</h3>
+                <p>Define a simple route in Archus:</p>
+                <pre class="bg-gray-200 p-4 rounded"><code></code></pre>
+                </section>
         </div>
     </div>
-
-    <script type="text/javascript">
-        function dropdown() {
-            document.querySelector("#submenu").classList.toggle("hidden");
-            document.querySelector("#arrow").classList.toggle("rotate-0");
-        }
-        dropdown();
-
-        function openSidebar() {
-            document.querySelector(".sidebar").classList.toggle("hidden");
-        }
-    </script>
 </body>
 
 </html>
