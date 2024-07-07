@@ -11,16 +11,22 @@ def middleware_stack_order()->Dict[Middleware,int]:
         SecurityHeadersMiddleware:1,
         CORSMiddleware:2,
         LoggingMiddleware:3,
-        ThrottleMiddleWare:4,
-        GlobalExceptionHandlerMiddleware:5
+        GlobalExceptionHandlerMiddleware:4
     }
 
+
 def check_middleware_stack(middleware_stack:List[Middleware]):
-    prev_seq=0
     req_order=middleware_stack_order()
+    max_order=max([values for key,values in req_order.items()])
+    prev_seq=0
 
     for middleware in middleware_stack:
-        seq_no=req_order[middleware]
-        if seq_no<prev_seq:
-            raise Exception(f"{middleware} is missplaced. Stack should be [SecurityHeadersMiddleware,CORSMiddleware,LoggingMiddleware,ThrottleMiddleWare,GlobalExceptionHandlerMiddleware]")
-        prev_seq=seq_no
+        seq_no=req_order.get(middleware)
+        if seq_no==None:
+            if prev_seq<max_order:
+                raise Exception(f"{middleware} is missplaced. Place it at very bottom.")
+        else:
+            if seq_no<prev_seq:
+                raise Exception(f"{middleware} is missplaced. Stack should be [SecurityHeadersMiddleware,CORSMiddleware,LoggingMiddleware,GlobalExceptionHandlerMiddleware,ThrottleMiddleWare,CustomMiddlewares]")
+
+            prev_seq=seq_no
