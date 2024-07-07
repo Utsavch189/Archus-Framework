@@ -23,16 +23,9 @@ class Router:
             if match:
                 if (not request.method in method) and not request.headers.get('http_referer'):
                     return Response(HTTPStatus.METHOD_NOT_ALLOWED, 'Method Not Allowed')
+                
                 request.path_params = match.groupdict()
-                try:
-                    dependencies = resolve_handler_dependencies(handler, request)
-                    return handler(request, **dependencies, **request.path_params)
-                except ArchusException as e:
-                    return Response(status=e.status, body=e.to_dict())
-                except Exception as e:
-                    return Response(
-                                status=HTTPStatus.INTERNAL_SERVER_ERROR,
-                                body={"type": "Internal Server Error","message":str(e)},
-                                content_type="application/json"
-                            )
+                dependencies = resolve_handler_dependencies(handler, request)
+                return handler(request, **dependencies, **request.path_params)
+
         return Response(HTTPStatus.NOT_FOUND, 'Not Found')
