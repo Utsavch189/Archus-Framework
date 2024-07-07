@@ -70,9 +70,9 @@
                 <h2 class="text-2xl font-bold mb-4">Examples</h2>
                 <p>Here are some examples to help you get started with Archus.</p>
                 <!-- Add example code snippets here -->
-                 <!-- Project Structure -->
-                 <h3 class="text-xl font-bold mb-2">Project Structure</h3>
-                 <pre class="bg-gray-200 p-4 rounded"><code>
+                <!-- Project Structure -->
+                <h3 class="text-xl font-bold mb-2">Project Structure</h3>
+                <pre class="bg-gray-200 p-4 rounded"><code>
                     ├── app
                     │   ├── api
                     │   │   ├── __init__.py
@@ -95,14 +95,19 @@
                     └── templates
                         └── index.html
                  </code></pre>
-                 <section id="features">
+                <section id="features">
                     <h3 class="text-2xl font-bold mb-4">app directory</h3>
                     <ul class="list-disc list-inside">
                         <li><b>app.py</b> contains application instance and all routing and middleware setups.</li>
-                        <li><b>api</b> directory contains rest api implementations with versioning.</br><pre>  Each version folders [ex. <b>v1</b>] must have routes and service files and may have serializer file.</pre> </li>
-                        <li><b>routes.py</b> file contains routing path with http methods and request handlers from it's service.py</li>
-                        <li><b>service.py</b> file contains business logics with request handlers which are registered in routes.py</li>
-                        <li><b>serializer.py</b> file may contains <b>ArchusSerializer</b>, which can deserialize the incoming json data with validation and vice-versa.</li>
+                        <li><b>api</b> directory contains rest api implementations with versioning.</br>
+                            <pre>  Each version folders [ex. <b>v1</b>] must have routes and service files and may have serializer file.</pre>
+                        </li>
+                        <li><b>routes.py</b> file contains routing path with http methods and request handlers from it's
+                            service.py</li>
+                        <li><b>service.py</b> file contains business logics with request handlers which are registered
+                            in routes.py</li>
+                        <li><b>serializer.py</b> file may contains <b>ArchusSerializer</b>, which can deserialize the
+                            incoming json data with validation and vice-versa.</li>
                         <li><b>templating</b> directory contains the implementations for template serving.</li>
                         <li><b>route.py & service.py</b> both acts as same as <b>api</b> directory.</li>
                     </ul>
@@ -112,34 +117,136 @@
                     </ul>
                     <h3 class="text-2xl font-bold mb-4">gunicorn_config.py</h3>
                     <ul class="list-disc list-inside">
-                        <li>If your application is running on gunicorn , it may contains configuration for gunicorn.</li>
+                        <li>If your application is running on gunicorn , it may contains configuration for gunicorn.
+                        </li>
                     </ul>
 
                     <h3 class="text-2xl font-bold mb-4">templates</h3>
                     <ul class="list-disc list-inside">
-                        <li>Contains all of html files that are served by <b>service.py of app/templating directory</b>.</li>
+                        <li>Contains all of html files that are served by <b>service.py of app/templating directory</b>.
+                        </li>
                     </ul>
 
                     <h3 class="text-2xl font-bold mb-4">static</h3>
                     <ul class="list-disc list-inside">
-                        <li>Contains all css and javascript files for the html files of templates directory.<br><pre><b>  While including css or js files from static folder your path must be like, </br> '/static/style.css' or '/static/index.js'</b></pre></li>
+                        <li>Contains all css and javascript files for the html files of templates directory.<br>
+                            <pre><b>  While including css or js files from static folder your path must be like, </br> '/static/style.css' or '/static/index.js'</b></pre>
+                        </li>
                     </ul>
 
                     <h3 class="text-2xl font-bold mb-4">media</h3>
                     <ul class="list-disc list-inside">
-                        <li>Contains the media files and must have served by <b>'url/media/file'</b>, it means '/media' prefix before file name.</li>
+                        <li>Contains the media files and must have served by <b>'url/media/file'</b>, it means '/media'
+                            prefix before file name.</li>
                     </ul>
 
                     <h3 class="text-2xl font-bold mb-4">run.py</h3>
                     <ul class="list-disc list-inside">
-                        <li><b>python3 run.py</b> will run your application. </br><pre><b>  dev=False in application.run() will active gunicorn server and dev=True will active dev server.</b></pre></li>
+                        <li><b>python3 run.py</b> will run your application. </br>
+                            <pre><b>  dev=False in application.run() will active gunicorn server and dev=True will active dev server.</b></pre>
+                        </li>
                     </ul>
                 </section>
+                <br>
+                <!-- Routing -->
+                <h3 class="text-xl font-bold mb-2">Routing</h3>
+                <p>In app/app.py:</p>
+                <pre class="bg-gray-200 p-4 rounded"><code>
+                    from app.api.v1.routes import v1_urls
+        
+                    application.register_blueprint("/api/v1",v1_urls)
+                </code></pre>
+                <p>Which means all the routes in <b>api/v1 directory</b> must have a prefix of <b>'/api/v1'</b> before
+                    their routes.</p>
+                <br>
+                <p>Now in app/api/v1/routes.py:</p>
+                <pre class="bg-gray-200 p-4 rounded"><code>
+                    from .service import index
 
-                <h3 class="text-xl font-bold mb-2">Simple Route</h3>
-                <p>Define a simple route in Archus:</p>
-                <pre class="bg-gray-200 p-4 rounded"><code></code></pre>
-                </section>
+                    v1_urls=[
+                            {'path': '/', 'method': ['GET'], 'handler': index}
+                        ]
+                </code></pre>
+                <p><b>1. </b>Each urls array contains dictionaries of path, method and handlers.
+                    <br>
+                <pre><b>2. </b>Here the '/' path indicates the 'index' named handler from service.py.</pre>
+                <pre><b>3. </b>'method' is an array of http methods that are assigned for that 'index' handler.</pre>
+                <pre><b>4. </b>Now here the path is '/', but it will not work if you simply hit on 'http://127.0.0.1:8000' <br>or your application's url, you must have the prefix of '/api/v1' after your url,<br>Because in 'app/app.py' you have registered your 'v1_urls' with a prefix of '/api/v1'.
+                        
+                    </pre>
+                </p>
+                <br>
+                <p><b>Dynamic Routing</b></p>
+                <p>In v1/routes.py : </p>
+                <pre class="bg-gray-200 p-4 rounded"><code>
+                    from .service import index
+
+                    v1_urls=[
+                            {'path': '/&lt;id&gt;&amp;&lt;number&gt;', 'method': ['GET'], 'handler': index}
+                        ]
+                </code></pre>
+                <p>In v1/service.py : </p>
+                <pre class="bg-gray-200 p-4 rounded"><code>
+                    def index(request,id,number):
+                        return Response(HTTPStatus.OK,{"message":"api is running...","id":id,"number":number})
+                </code></pre>
+                <br>
+                <!-- Query Params -->
+                <h3 class="text-xl font-bold mb-2">Query Params</h3>
+                <p>In url:</p>
+                <pre class="bg-gray-200 p-4 rounded"><code>
+                    Suppose You have an url like,
+                    http://127.0.0.1:8000?id=1
+
+                    So you can access it,
+                    id = request.query_params.get('id')
+
+                    Or,
+
+                    http://127.0.0.1:8000?id=1&number=66
+
+                    So you can access it,
+                    id = request.query_params.get('id')
+                    number= request.query_params.get('number')
+
+                </code></pre>
+                <br>
+                <!-- Create Your First REST API -->
+                <h3 class="text-xl font-bold mb-2">Create Your First REST API</h3>
+                <p>In v1/routes.py:</p>
+                <pre class="bg-gray-200 p-4 rounded"><code>
+                    from .service import index
+
+                    v1_urls=[
+                            {'path': '/', 'method': ['GET'], 'handler': index}
+                        ]
+
+                </code></pre>
+                <br>
+                <p>In v1/service.py:</p>
+                <pre class="bg-gray-200 p-4 rounded"><code>
+                    from archus.response import Response
+                    from archus.status import HTTPStatus
+
+                    def index(request):
+                        return Response(HTTPStatus.OK,{"message":"my first api..."})
+                </code></pre>
+                <p><b>1. </b>'Response' class is responsible to handle of returning responses.</p>
+                <p><b>2. </b>'HTTPStatus' class is responsible to generate appropriate status codes for your response.</p>
+                <p><pre><b>3.</b>'request' object contains info and data of an incoming request : 
+                    <b>a. request.method</b>
+                    <b>b. request.path</b>
+                    <b>c. request.query_params</b>
+                    <b>d. request.headers</b>
+                    <b>e. request.http_headers</b>
+                    <b>f. request.cookies</b>
+                    <b>g. request.body</b>
+                    <b>h. request.form</b>
+                    <b>i. request.files</b>
+                    <b>j. request.json</b>
+                    <b>k. request.data</b>
+                </pre></p>
+            </section>
         </div>
     </div>
 </body>
