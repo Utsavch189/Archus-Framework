@@ -67,9 +67,9 @@ class Archus:
         if self._middleware:
             check_middleware_stack(self._middleware)
 
-    def _apply_middleware(self, app):
+    def _apply_middleware(self, _app):
         for middleware_cls in reversed(self._middleware):
-            _app = middleware_cls(app)
+            _app = middleware_cls(_app)
         return _app
     
     def redirect(self, location, status=HTTPStatus.FOUND):
