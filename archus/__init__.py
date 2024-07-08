@@ -1,1 +1,1 @@
-from archus.main import Archus
+from .main import Archus

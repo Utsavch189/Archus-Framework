@@ -1,3 +1,3 @@
-from archus.file_handlers.static_handles import StaticFileHandler
-from archus.file_handlers.media_handler import MediaFileHandler
-from archus.file_handlers.file_parser import FileHandler
+from .static_handles import StaticFileHandler
+from .media_handler import MediaFileHandler
+from .file_parser import FileHandler

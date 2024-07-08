@@ -4,12 +4,12 @@ from .response import Response
 from jinja2 import Environment, FileSystemLoader, select_autoescape,TemplateNotFound
 from .status import HTTPStatus
 import mimetypes
-from archus.file_handlers import StaticFileHandler,MediaFileHandler
-from archus.middleware.order_middleware import check_middleware_stack
-from archus.exceptions import ArchusException
-from archus.middleware import Middleware
+from .file_handlers import StaticFileHandler,MediaFileHandler
+from .middleware.order_middleware import check_middleware_stack
+from .exceptions import ArchusException
+from .middleware import Middleware
 from datetime import datetime
-from archus.docs import index
+from .docs import index
 
 import os,sys
 

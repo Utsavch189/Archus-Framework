@@ -1,4 +1,4 @@
-from archus.serializer.validation_error import ValidationError
+from .validation_error import ValidationError
 
 class Field:
     def __init__(self, required=False, data_type=None, default=None,validator=None,external_serializer=None):

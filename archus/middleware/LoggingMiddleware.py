@@ -1,4 +1,4 @@
-from archus.middleware.main import Middleware
+from .main import Middleware
 import os,sys,json
 from datetime import datetime
 

@@ -1,4 +1,4 @@
-from archus.middleware.main import Middleware
+from .main import Middleware
 
 class CSPMiddleware(Middleware):
     def __init__(self, app):

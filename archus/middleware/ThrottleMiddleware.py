@@ -1,8 +1,8 @@
 from collections import defaultdict, deque
 import time
-from archus.status import HTTPStatus
-from archus.response import Response
-from archus.middleware.main import Middleware
+from ..status import HTTPStatus
+from ..response import Response
+from .main import Middleware
 from datetime import datetime,timedelta
 import os,sys
 

@@ -1,1 +1,1 @@
-from archus.mail.main import SendMail
+from .main import SendMail

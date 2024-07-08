@@ -1,7 +1,7 @@
-from archus.response import Response
-from archus.status import HTTPStatus
-from archus.exceptions import ArchusException
-from archus.middleware.main import Middleware
+from ..response import Response
+from ..status import HTTPStatus
+from ..exceptions import ArchusException
+from .main import Middleware
 
 class GlobalExceptionHandlerMiddleware(Middleware):
     def __init__(self, app):

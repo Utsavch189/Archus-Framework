@@ -1,4 +1,4 @@
-from archus.status import HTTPStatus
+from ..status import HTTPStatus
 
 class ArchusException(Exception):
 

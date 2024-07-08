@@ -1,8 +1,8 @@
-from archus.serializer.field import Field
-from archus.serializer.validation_error import ValidationError
+from .field import Field
+from .validation_error import ValidationError
 import json
-from archus.exceptions import ArchusException
-from archus.status import HTTPStatus
+from ..exceptions import ArchusException
+from ..status import HTTPStatus
 
 class ArchusSerializer:
     def __init__(self,partial=False, **fields):

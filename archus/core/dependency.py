@@ -1,4 +1,4 @@
-from archus.serializer import ArchusSerializer
+from ..serializer import ArchusSerializer
 from inspect import signature
 
 def resolve_handler_dependencies(handler,request):

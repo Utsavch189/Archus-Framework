@@ -1,4 +1,4 @@
-from archus.middleware.main import Middleware
+from .main import Middleware
 
 class SecurityHeadersMiddleware(Middleware):
     def __init__(self, app):

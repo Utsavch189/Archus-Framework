@@ -1,1 +1,1 @@
-from archus.exceptions.main import ArchusException
+from .main import ArchusException

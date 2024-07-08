@@ -1,4 +1,4 @@
-from archus.middleware.main import Middleware
+from .main import Middleware
 import os,sys
 
 root_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))

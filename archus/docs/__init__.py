@@ -1,1 +1,1 @@
-from archus.docs.serve import index
+from .serve import index
