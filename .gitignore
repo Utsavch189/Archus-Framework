@@ -1,2 +1,5 @@
 /archenv
 **/__pycache__
+/build
+/dist
+/archus.egg-info
