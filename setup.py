@@ -1,19 +1,22 @@
 from setuptools import setup, find_packages
 
-with open("./README.md", "r") as f:
+with open("README.md", "r") as f:
     long_description = f.read()
 
 setup(
     name='archus',
-    version='1.1.0',
-    # package_dir={"": "archus"},
-    # packages=find_packages(where="archus"),
-    long_description=long_description ,
+    version='1.4.8',
+    packages=find_packages(),
+    long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/Utsavch189/Archus-Framework",
     author="Utsav Chatterjee",
     author_email="utsavchatterjee71@gmail.com",
     license="MIT",
+    include_package_data=True,  # Ensure this is set to True
+    package_data={
+        "": ["*.html","*.py"],  # Adjust the pattern to match your HTML files
+    },
     classifiers=[
         "License :: OSI Approved :: MIT License",
         "Programming Language :: Python :: 3.10",
