@@ -10,21 +10,15 @@ from .exceptions import ArchusException
 from .middleware import Middleware
 from datetime import datetime
 from .docs import index
-
-import os,sys
-
-try:
-    import config
-except Exception as e:
-    print(e)
+import sys
 
 class Archus:
-    def __init__(self):
+    def __init__(self,BASE_DIR=None):
         self._router = Router()
         self._middleware = []
         self._dir=None
+        self.BASE_DIR=BASE_DIR
 
-        self.BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
         sys.path.append(self.BASE_DIR)
         
         self._router.add_route(
@@ -33,12 +27,17 @@ class Archus:
             handler=index
         )
 
+        try:
+            import config
+        except Exception as e:
+            pass
+
         if config.KEY=="":
             raise Exception("Application Key Not Found!")
         
-        _static_dir=self.BASE_DIR+"/"+config.STATIC_DIR or self.BASE_DIR+"/"+"static"
-        _media_dir=self.BASE_DIR+"/"+config.MEDIA_DIR or self.BASE_DIR+"/"+"media"
-        _template_dir=self.BASE_DIR+"/"+config.TEMPLATE_DIR or self.BASE_DIR+"/"+"templates"
+        _static_dir=self.BASE_DIR / config.STATIC_DIR or self.BASE_DIR / "static"
+        _media_dir=self.BASE_DIR / config.MEDIA_DIR or self.BASE_DIR / "media"
+        _template_dir=self.BASE_DIR / config.TEMPLATE_DIR or self.BASE_DIR / "templates"
 
         self._template_env = Environment(
             loader=FileSystemLoader(_template_dir),
@@ -69,7 +68,7 @@ class Archus:
 
     def _apply_middleware(self, _app):
         for middleware_cls in reversed(self._middleware):
-            _app = middleware_cls(_app)
+            _app = middleware_cls(_app,BASE_DIR=self.BASE_DIR)
         return _app
     
     def redirect(self, location, status=HTTPStatus.FOUND):
@@ -106,7 +105,7 @@ class Archus:
 
             if dir:
                 _template_env = Environment(
-                    loader=FileSystemLoader(self.BASE_DIR+"/"+dir),
+                    loader=FileSystemLoader(self.BASE_DIR / dir),
                     autoescape=select_autoescape(['html', 'xml'])
                 )
                 _template = _template_env.get_template(template_name)
