@@ -11,6 +11,8 @@ from .middleware import Middleware
 from datetime import datetime
 from .docs import index
 import sys
+from pathlib import Path
+
 
 class Archus:
     def __init__(self,BASE_DIR=None):
@@ -104,14 +106,20 @@ class Archus:
         try:
 
             if dir:
+                """
+                Specially for docs
+                """
                 _template_env = Environment(
-                    loader=FileSystemLoader(self.BASE_DIR / dir),
+                    loader=FileSystemLoader(Path(__file__).resolve().parent / dir),
                     autoescape=select_autoescape(['html', 'xml'])
                 )
                 _template = _template_env.get_template(template_name)
                 _rendered_content = _template.render(**context).encode('utf-8')
                 return Response(HTTPStatus.OK, _rendered_content, 'text/html; charset=utf-8')
-        
+
+            """
+            For all other templates
+            """
             _template = self._template_env.get_template(template_name)
             _rendered_content = _template.render(**context).encode('utf-8')
             return Response(HTTPStatus.OK, _rendered_content, 'text/html; charset=utf-8')
@@ -136,7 +144,7 @@ class Archus:
                     _response=self._render_template(_response['template'], **_response.get('context', {}))
 
                 elif isinstance(_response, dict) and 'docs' in _response:
-                    _response=self._render_template(_response['docs'],dir="archus/docs", **_response.get('context', {}))
+                    _response=self._render_template(_response['docs'],dir="docs", **_response.get('context', {}))
                 
                 elif isinstance(_response, dict) and 'location' in _response:
                     _response=self.redirect(location=_response['location'])
