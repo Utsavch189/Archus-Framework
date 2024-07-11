@@ -1,8 +1,8 @@
 from .main import Middleware
 
 class CSPMiddleware(Middleware):
-    def __init__(self, app):
-        super().__init__(app)
+    def __init__(self, app,BASE_DIR=None):
+        super().__init__(app,BASE_DIR=BASE_DIR)
         self.default_policies = {
             "default-src": ["'self'"],
             "script-src": ["'self'", "'unsafe-eval'", "'unsafe-inline'"],

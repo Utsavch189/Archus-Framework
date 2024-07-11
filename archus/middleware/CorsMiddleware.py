@@ -1,17 +1,17 @@
 from .main import Middleware
 import os,sys
 
-root_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))
-sys.path.append(root_dir)
-
-try:
-    import config
-except Exception as e:
-    print(e)
-
 class CORSMiddleware(Middleware):
-    def __init__(self, app, allowed_origins=None, allowed_methods=None, allowed_headers=None):
-        super().__init__(app)
+    def __init__(self, app, BASE_DIR=None,allowed_origins=None, allowed_methods=None, allowed_headers=None):
+        super().__init__(app,BASE_DIR=BASE_DIR)
+
+        sys.path.append(self.BASE_DIR)
+
+        try:
+            import config
+        except Exception as e:
+            pass
+
         self.allowed_origins = config.ALLOWED_ORIGINS #or ['*']
         self.allowed_methods = config.ALLOWED_METHODS #or ['GET', 'POST', 'OPTIONS','PUT','DELETE','PATCH']
         self.allowed_headers = config.ALLOWED_HEADERS  #or ['Content-Type']

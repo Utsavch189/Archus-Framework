@@ -2,22 +2,21 @@ from .main import Middleware
 import os,sys,json
 from datetime import datetime
 
-def write(message:str,status:str,path:str,client:str,error=False):
-        root_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))
-        sys.path.append(root_dir)
+def write(message:str,status:str,path:str,client:str,base_dir:str,error=False):
+        sys.path.append(base_dir)
 
         try:
             import config
         except Exception as e:
-            print(e)
+            pass
 
-        LOG_DIR=config.LOG_DIR or "log"
+        LOG_DIR=config.LOG_DIR or base_dir / "log"
         
         if not os.path.exists(LOG_DIR):
             os.mkdir(LOG_DIR)
 
         _now = datetime.now()
-        _sub_dir = LOG_DIR+"/"+_now.strftime("%Y-%m-%d")
+        _sub_dir = LOG_DIR+"/"+ _now.strftime("%Y-%m-%d")
 
         if not os.path.exists(_sub_dir):
             os.mkdir(_sub_dir)
@@ -30,8 +29,8 @@ def write(message:str,status:str,path:str,client:str,error=False):
         print(log)
 
 class LoggingMiddleware(Middleware):
-    def __init__(self, app):
-        super().__init__(app)
+    def __init__(self, app,BASE_DIR=None):
+        super().__init__(app,BASE_DIR=BASE_DIR)
 
     def __call__(self, environ, start_response):
 
@@ -51,6 +50,7 @@ class LoggingMiddleware(Middleware):
                     status=status,
                     path=f"{environ['REQUEST_METHOD']} {environ['PATH_INFO']}",
                     client=environ.get('REMOTE_ADDR', '') ,
+                    base_dir=self.BASE_DIR,
                     error=True if int(status.split(" ")[0])>=400 else False
                 )
                 pass

@@ -4,8 +4,8 @@ from ..exceptions import ArchusException
 from .main import Middleware
 
 class GlobalExceptionHandlerMiddleware(Middleware):
-    def __init__(self, app):
-        super().__init__(app)
+    def __init__(self, app,BASE_DIR=None):
+        super().__init__(app,BASE_DIR=BASE_DIR)
 
     def __call__(self, environ, start_response):
         try:
