@@ -1,9 +1,7 @@
 # Archus Framework
-
 Archus is a lightweight and modular Python web framework designed to be simple yet powerful and based on <b>wsgi</b>. It allows developers to quickly build web applications with minimal setup. Archus supports middleware, templating, and routing out of the box, making it an excellent choice for both small and large web projects.
 
 ## Features
-
 - **Middleware Support**: Easily add and manage middleware components.
 - **Routing**: Simple and flexible routing system.
 - **Templating**: Jinja2 templating engine for dynamic HTML generation.
@@ -15,15 +13,13 @@ Archus is a lightweight and modular Python web framework designed to be simple y
 - **ArchusException**: Built in <b>ArchusException</b> allows you to throw a custom exception which is handled by <b>Global Exception Handler</b>.
 
 ## Installation
-
 Install Archus via pip:
 
 ```sh
-pip install archus
+pip install -i https://test.pypi.org/simple/ archus
 ```
 
 ## Create Your First Project
-
 ```sh
-archus createproject your_project_name
+archus createproject [project_name]
 ```
