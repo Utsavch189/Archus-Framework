@@ -5,7 +5,7 @@ with open("README.md", "r") as f:
 
 setup(
     name='archus',
-    version='1.4.8',
+    version='1.5.1',
     packages=find_packages(),
     long_description=long_description,
     long_description_content_type="text/markdown",
@@ -15,7 +15,7 @@ setup(
     license="MIT",
     include_package_data=True,  # Ensure this is set to True
     package_data={
-        "": ["*.html","*.py"],  # Adjust the pattern to match your HTML files
+        "": ["*.html", "*.py"],  # Adjust the pattern to match your HTML files
     },
     classifiers=[
         "License :: OSI Approved :: MIT License",

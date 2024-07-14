@@ -69,11 +69,11 @@ bind = '0.0.0.0:8000'  # Bind to localhost on port 8000
 worker_connections = 1000  # Number of connections per worker
 ''',
 
-        # f"{project_name}/app/api/__init__.py"
-        '''\n''',
+# f"{project_name}/app/api/__init__.py"
+'''\n''',
 
-        # f"{project_name}/app/api/v1/__init__.py"
-        '''\n''',
+# f"{project_name}/app/api/v1/__init__.py"
+'''\n''',
 
 # f"{project_name}/app/api/v1/routes.py"
 '''
@@ -83,8 +83,8 @@ from .service import index
 ]
 ''',
 
-        # f"{project_name}/app/api/v1/serializer.py"
-        '''\n''',
+# f"{project_name}/app/api/v1/serializer.py"
+'''\n''',
 
 # f"{project_name}/app/api/v1/service.py"
 '''
@@ -94,8 +94,8 @@ from archus.response import Response
 \treturn Response(HTTPStatus.OK, { "message": "Archus is up & running" })
 ''',
 
-        # f"{project_name}/app/templating/__init__.py"
-        '''\n''',
+# f"{project_name}/app/templating/__init__.py"
+'''\n''',
 
 # f"{project_name}/app/templating/routes.py"
 '''
@@ -301,14 +301,14 @@ cython_debug/
 #.idea/
 ''',
 
-        # f"{project_name}/static/.gitkeep"
-        '''\n''',
+# f"{project_name}/static/.gitkeep"
+'''\n''',
 
-        # f"{project_name}/templates/.gitkeep"
-        '''\n''',
+# f"{project_name}/templates/.gitkeep"
+'''\n''',
 
-        # f"{project_name}/media/.gitkeep"
-        '''\n'''
+# f"{project_name}/media/.gitkeep"
+'''\n'''
     ]
 
     for i in range(0,len(init_files)):
