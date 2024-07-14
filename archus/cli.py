@@ -50,12 +50,12 @@ def create_project_structure(project_name):
 from app.api.v1.routes import v1_urls
 from app.templating.routes import urls
 \nfrom archus import Archus
-from archus.middleware import CORSMiddleware, LoggingMiddleware, SecurityHeadersMiddleware, GlobalExceptionHandlerMiddleware
+from archus.middleware import SecurityHeadersMiddleware, CORSMiddleware, LoggingMiddleware, GlobalExceptionHandlerMiddleware
 \nfrom config import BASE_DIR
 \n\napplication = Archus(BASE_DIR=BASE_DIR)
-\napplication.add_middleware(CORSMiddleware)
+\napplication.add_middleware(SecurityHeadersMiddleware)
+application.add_middleware(CORSMiddleware)
 application.add_middleware(LoggingMiddleware)
-application.add_middleware(SecurityHeadersMiddleware)
 application.add_middleware(GlobalExceptionHandlerMiddleware)
 \napplication.register_blueprint("/", urls)
 application.register_blueprint("/api/v1", v1_urls)
@@ -69,11 +69,11 @@ bind = '0.0.0.0:8000'  # Bind to localhost on port 8000
 worker_connections = 1000  # Number of connections per worker
 ''',
 
-        # f"{project_name}/app/api/__init__.py"
-        '''\n''',
+# f"{project_name}/app/api/__init__.py"
+'''\n''',
 
-        # f"{project_name}/app/api/v1/__init__.py"
-        '''\n''',
+# f"{project_name}/app/api/v1/__init__.py"
+'''\n''',
 
 # f"{project_name}/app/api/v1/routes.py"
 '''
@@ -83,8 +83,8 @@ from .service import index
 ]
 ''',
 
-        # f"{project_name}/app/api/v1/serializer.py"
-        '''\n''',
+# f"{project_name}/app/api/v1/serializer.py"
+'''\n''',
 
 # f"{project_name}/app/api/v1/service.py"
 '''
@@ -94,8 +94,8 @@ from archus.response import Response
 \treturn Response(HTTPStatus.OK, { "message": "Archus is up & running" })
 ''',
 
-        # f"{project_name}/app/templating/__init__.py"
-        '''\n''',
+# f"{project_name}/app/templating/__init__.py"
+'''\n''',
 
 # f"{project_name}/app/templating/routes.py"
 '''
@@ -301,14 +301,14 @@ cython_debug/
 #.idea/
 ''',
 
-        # f"{project_name}/static/.gitkeep"
-        '''\n''',
+# f"{project_name}/static/.gitkeep"
+'''\n''',
 
-        # f"{project_name}/templates/.gitkeep"
-        '''\n''',
+# f"{project_name}/templates/.gitkeep"
+'''\n''',
 
-        # f"{project_name}/media/.gitkeep"
-        '''\n'''
+# f"{project_name}/media/.gitkeep"
+'''\n'''
     ]
 
     for i in range(0,len(init_files)):
