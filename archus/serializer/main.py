@@ -5,15 +5,14 @@ from ..exceptions import ArchusException
 from ..status import HTTPStatus
 
 class ArchusSerializer:
-    def __init__(self,partial=False, **fields):
+    def __init__(self, partial=False, many=False, **fields):
         self._fields = fields
         self._error={}
         self._has_error=False
+        self.many=many
         self._partial=partial
 
-
     def is_valid(self, data):
-
         for _field_name, _field in self._fields.items():
             _value = data.get(_field_name, _field.default)
             try:
@@ -50,5 +49,18 @@ class ArchusSerializer:
         return json.dumps(validated_data)
 
     def deserialize(self, data):
-        parsed_data = json.loads(data)
-        return self.validated_data(parsed_data)
+        if self.many:
+            if type(data) != list:
+                raise ArchusException("The data should be a list.")
+
+            _result = []
+
+            for _data in data:
+                _result.append(self.validated_data(_data))
+            
+            return _result
+        else:
+            if type(data) != str:
+                return self.validated_data(data)
+
+            return self.validated_data(json.loads(data))
