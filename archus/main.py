@@ -1,21 +1,22 @@
+import sys
+import mimetypes
+
+from .template import render_template
 from .router import Router
 from .request import Request
 from .response import Response
-from jinja2 import Environment, FileSystemLoader, select_autoescape,TemplateNotFound
 from .status import HTTPStatus
-import mimetypes
-from .file_handlers import StaticFileHandler,MediaFileHandler
+from .file_handlers import StaticFileHandler, MediaFileHandler
 from .middleware.order_middleware import check_middleware_stack
 from .exceptions import ArchusException
 from .middleware import Middleware
 from datetime import datetime
 from .docs import index
-import sys
 from pathlib import Path
 
 
 class Archus:
-    def __init__(self,BASE_DIR=None):
+    def __init__(self, BASE_DIR=None):
         self._router = Router()
         self._middleware = []
         self._dir=None
@@ -37,17 +38,17 @@ class Archus:
         if config.KEY=="":
             raise Exception("Application Key Not Found!")
         
-        _static_dir=self.BASE_DIR / config.STATIC_DIR or self.BASE_DIR / "static"
-        _media_dir=self.BASE_DIR / config.MEDIA_DIR or self.BASE_DIR / "media"
-        _template_dir=self.BASE_DIR / config.TEMPLATE_DIR or self.BASE_DIR / "templates"
+        self._static_dir=self.BASE_DIR / config.STATIC_DIR or self.BASE_DIR / "static"
+        self._media_dir=self.BASE_DIR / config.MEDIA_DIR or self.BASE_DIR / "media"
+        self._template_dir=self.BASE_DIR / config.TEMPLATE_DIR or self.BASE_DIR / "templates"
 
-        self._template_env = Environment(
-            loader=FileSystemLoader(_template_dir),
-            autoescape=select_autoescape(['html', 'xml'])
-        )
+        # self._template_env = Environment(
+        #     loader=FileSystemLoader(_template_dir),
+        #     autoescape=select_autoescape(['html', 'xml'])
+        # )
 
-        self._static_handler=StaticFileHandler(_static_dir)
-        self._media_handler=MediaFileHandler(_media_dir)
+        self._static_handler=StaticFileHandler(self._static_dir)
+        self._media_handler=MediaFileHandler(self._media_dir)
 
 
     def route(self, path:str, method:str):
@@ -102,29 +103,16 @@ class Archus:
             return Response(HTTPStatus.NOT_FOUND, 'Not Found')
 
 
-    def _render_template(self, template_name,dir=None, **context):
-        try:
-
-            if dir:
-                """
-                Specially for docs
-                """
-                _template_env = Environment(
-                    loader=FileSystemLoader(Path(__file__).resolve().parent / dir),
-                    autoescape=select_autoescape(['html', 'xml'])
-                )
-                _template = _template_env.get_template(template_name)
-                _rendered_content = _template.render(**context).encode('utf-8')
-                return Response(HTTPStatus.OK, _rendered_content, 'text/html; charset=utf-8')
-
-            """
-            For all other templates
-            """
-            _template = self._template_env.get_template(template_name)
-            _rendered_content = _template.render(**context).encode('utf-8')
+    def _render_template(self, template_name, dir=None, **context):
+        if dir:
+            _rendered_content = render_template(template_name, Path(__file__).resolve().parent / dir, **context)
             return Response(HTTPStatus.OK, _rendered_content, 'text/html; charset=utf-8')
-        except TemplateNotFound:
-            return Response(HTTPStatus.NOT_FOUND, 'Template Not Found')
+
+        """
+        For all other templates
+        """
+        _rendered_content = render_template(template_name, self._template_dir, **context)
+        return Response(HTTPStatus.OK, _rendered_content, 'text/html; charset=utf-8')
     
     def _app(self,environ, start_response):
         try:

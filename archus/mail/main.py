@@ -1,4 +1,4 @@
-import smtplib,os
+import os, smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from email.mime.base import MIMEBase
@@ -6,19 +6,24 @@ from email import encoders
 import ssl
 import sys
 
-root_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))
-sys.path.append(root_dir)
-
-
-import config
 
 TLS_PORT = 587  # Port for TLS
 NON_TLS_PORT = 25  # Port for non-TLS
 SSL_PORT = 465  # Port for SSL
 
 class SendMail:
+    def __init__(self,BASE_DIR=None,SMTP_SERVER:str="",SMTP_PASSWORD:str="",SMTP_USERNAME:str="",use_tls=True,use_ssl=False) -> None:
+        if not BASE_DIR:
+            raise Exception("Base directory must be specified")
 
-    def __init__(self,SMTP_SERVER:str="",SMTP_PASSWORD:str="",SMTP_USERNAME:str="",use_tls=True,use_ssl=False) -> None:
+        self.BASE_DIR=BASE_DIR
+        sys.path.append(self.BASE_DIR)
+
+        try:
+            import config
+        except Exception as e:
+            pass
+        
         self.SMTP_SERVER=SMTP_SERVER or config.SMTP_SERVER
         self.SMTP_PASSWORD=SMTP_PASSWORD or config.SMTP_PASSWORD
         self.SMTP_USERNAME=SMTP_USERNAME or config.SMTP_USERNAME
