@@ -5,7 +5,7 @@ with open("README.md", "r") as f:
 
 setup(
     name='archus',
-    version='1.5.8',  # advanced
+    version='1.5.9',  # advanced
     packages=find_packages(),
     long_description=long_description,
     long_description_content_type="text/markdown",
