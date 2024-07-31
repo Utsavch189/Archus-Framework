@@ -56,7 +56,7 @@ class LoggingMiddleware(Middleware):
                 pass
             
         except Exception as e:
-            print(e)
+           pass
         
         finally:
             return response

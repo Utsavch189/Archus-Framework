@@ -150,17 +150,84 @@ from app import application
 '''
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Archus Framework</title>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
+<body class="bg-gray-100 font-sans">
+    <header class=" text-white">
+        <div class="container mx-auto flex justify-between items-center p-3">
+            <img src="https://archus-docs.utsavchatterjee.me/logo.png" alt="Archus Logo" class="h-[100px] w-[100px]">
+        </div>
+    </header>
+    
+    <main class="text-center py-16">
+        <div class="container mx-auto">
+            <h1 class="text-5xl font-bold mb-4">Welcome to Archus Framework</h1>
+            <p class="text-lg mb-8">A modern Python web framework designed to simplify your development process.</p>
+            <a href="/docs" class="bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700">Get Started</a>
+        </div>
+    </main>
 
-<body>
-  <h1>Hello World</h1>
+    <section id="features" class="py-16 bg-white">
+        <div class="container mx-auto text-center">
+            <h2 class="text-3xl font-bold mb-8">Features</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="bg-blue-50 p-6 rounded-lg shadow-lg">
+                    <h3 class="text-xl font-semibold mb-4">Middleware Support</h3>
+                    <p class="text-gray-700">Easily add and manage middleware components.</p>
+                </div>
+                <div class="bg-blue-50 p-6 rounded-lg shadow-lg">
+                    <h3 class="text-xl font-semibold mb-4">Routing</h3>
+                    <p class="text-gray-700">Simple and flexible routing system.</p>
+                </div>
+                <div class="bg-blue-50 p-6 rounded-lg shadow-lg">
+                    <h3 class="text-xl font-semibold mb-4">Templating</h3>
+                    <p class="text-gray-700">Jinja2 templating engine for dynamic HTML generation.</p>
+                </div>
+                <div class="bg-blue-50 p-6 rounded-lg shadow-lg">
+                    <h3 class="text-xl font-semibold mb-4">Static and Media Files Handling</h3>
+                    <p class="text-gray-700">Serve static and media files effortlessly.</p>
+                </div>
+                <div class="bg-blue-50 p-6 rounded-lg shadow-lg">
+                    <h3 class="text-xl font-semibold mb-4">CORS and Security Headers</h3>
+                    <p class="text-gray-700">Built-in support for CORS and security headers.</p>
+                </div>
+                <div class="bg-blue-50 p-6 rounded-lg shadow-lg">
+                    <h3 class="text-xl font-semibold mb-4">Global Exception Handling</h3>
+                    <p class="text-gray-700">Graceful handling of exceptions.</p>
+                </div>
+                <div class="bg-blue-50 p-6 rounded-lg shadow-lg">
+                    <h3 class="text-xl font-semibold mb-4">Rest API Support</h3>
+                    <p class="text-gray-700">Supports REST API design with proper versioning.</p>
+                </div>
+                <div class="bg-blue-50 p-6 rounded-lg shadow-lg">
+                    <h3 class="text-xl font-semibold mb-4">Serializer</h3>
+                    <p class="text-gray-700">Built-in ArchusSerializer for serializing, deserializing, and validating JSON API data.</p>
+                </div>
+                <div class="bg-blue-50 p-6 rounded-lg shadow-lg">
+                    <h3 class="text-xl font-semibold mb-4">ArchusException</h3>
+                    <p class="text-gray-700">Built-in ArchusException for custom exceptions handled by Global Exception Handler.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section id="get-started" class="py-16">
+        <div class="container mx-auto text-center">
+            <h2 class="text-3xl font-bold mb-8">Get Started</h2>
+            <p class="text-lg mb-8">Follow our documentation to set up and start using Archus Framework.</p>
+            <a href="/docs" class="bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700">Read the Docs</a>
+        </div>
+    </section>
+
+    <footer class="bg-gray-800 text-white py-6">
+        <div class="container mx-auto text-center">
+            <p>&copy; 2024 Archus Framework. All rights reserved.</p>
+        </div>
+    </footer>
 </body>
-
 </html>
 ''',
 

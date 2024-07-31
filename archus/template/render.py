@@ -15,7 +15,6 @@ def render_template(template_name, dir=None, **context):
 		_template = _template_env.get_template(template_name)
 		_rendered_content = _template.render(**context).encode('utf-8')
 		return _rendered_content
-		# return Response(HTTPStatus.OK, _rendered_content, 'text/html; charset=utf-8')
 	except TemplateNotFound:
 		raise ArchusException(status=HTTPStatus.NOT_FOUND, message="Template not found")
 
@@ -31,6 +30,5 @@ def render_template_as_string(template_name, dir=None, **context):
 		_template = _template_env.get_template(template_name)
 		_rendered_content = _template.render(**context)
 		return _rendered_content
-		# return Response(HTTPStatus.OK, _rendered_content, 'text/html; charset=utf-8')
 	except TemplateNotFound:
 		raise ArchusException(status=HTTPStatus.NOT_FOUND, message="Template not found")

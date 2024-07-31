@@ -16,7 +16,7 @@ Archus is a lightweight and modular Python web framework designed to be simple y
 Install Archus via pip:
 
 ```sh
-pip install -i https://test.pypi.org/simple/ archus
+pip install archus
 ```
 
 ## Create Your First Project
