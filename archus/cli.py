@@ -1,7 +1,14 @@
 import os
 import sys
 import argparse
+import uuid
+import time
 
+def generate_unique_id():
+    unique_id = uuid.uuid4()
+    current_time_millis = int(time.time() * 1000)
+    combined_id = str(current_time_millis) + str(unique_id).replace('-', '')
+    return combined_id
 
 def create_project_structure(project_name):
     # Define the folder structure
@@ -24,7 +31,6 @@ def create_project_structure(project_name):
     init_files = [
         f"{project_name}/app/__init__.py",
         f"{project_name}/app/app.py",
-        f"{project_name}/gunicorn_config.py",
         f"{project_name}/app/api/__init__.py",
         f"{project_name}/app/api/v1/__init__.py",
         f"{project_name}/app/api/v1/routes.py",
@@ -59,14 +65,6 @@ application.add_middleware(LoggingMiddleware)
 application.add_middleware(GlobalExceptionHandlerMiddleware)
 \napplication.register_blueprint("/", urls)
 application.register_blueprint("/api/v1", v1_urls)
-''',
-
-# f"{project_name}/gunicorn_config.py"
-'''
-workers = 4  # Number of worker processes
-timeout = 30  # Timeout for handling requests
-bind = '0.0.0.0:8000'  # Bind to localhost on port 8000
-worker_connections = 1000  # Number of connections per worker
 ''',
 
 # f"{project_name}/app/api/__init__.py"
@@ -112,11 +110,11 @@ def index(request):
 ''',
 
 # f"{project_name}/config.py"
-'''
+f'''
 from pathlib import Path
 \n\nBASE_DIR = Path(__file__).resolve().parent
 \n# Server Key\n# Secret key (use your random key for security)"
-KEY = "928635e70a014b41bfd38a66cf6a1939"
+KEY = "{generate_unique_id()}"
 \n# SMTP
 # SMTP_USE_TLS = True  # will automatically detect port 587
 # SMTP_USE_TLS = True  # will automatically detect port 465
@@ -143,7 +141,7 @@ TEMPLATE_DIR = "templates"
 '''
 from app import application
 \n\nif __name__ == "__main__":
-\tapplication.run()
+\tapplication.run_dev()
 ''',
 
 # f"{project_name}/templates/index.html"
