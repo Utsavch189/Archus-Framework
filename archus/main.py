@@ -13,7 +13,7 @@ from .middleware import Middleware
 from datetime import datetime
 from .docs import index
 from pathlib import Path
-
+from .server import run_local
 
 class Archus:
     def __init__(self, BASE_DIR=None):
@@ -154,21 +154,9 @@ class Archus:
         _app = self._apply_middleware(self._app)
         return _app(environ, start_response)
     
-    def run(self,dev:bool=True,host:str="127.0.0.1",port:int=8000,gunicron_command:list=['gunicorn','-c', 'gunicorn_config.py',  'app:application' ]):
-        import subprocess
-        if dev:
-            from waitress import serve
-
-            try:
-                print(f"Dev Server Running on http://{host}:{port} at {datetime.now()}")
-                serve(self,host=host,port=port)
-            except Exception as e:
-                print(e)
-
-        else:
-            try:
-                subprocess.run(gunicron_command, check=True)
-            except subprocess.CalledProcessError as e:
-                print(f"Error running Gunicorn: {e}")
-            except KeyboardInterrupt:
-                exit()
+    def run_dev(self,host:str="127.0.0.1",port:int=8000):
+        run_local(
+            app=self,
+            host=host,
+            port=port
+        )
