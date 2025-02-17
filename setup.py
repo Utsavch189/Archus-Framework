@@ -5,7 +5,7 @@ with open("README.md", "r") as f:
 
 setup(
     name='archus',
-    version='1.2.0',
+    version='1.2.1',
     packages=find_packages(),
     description="A modern Python web framework designed to simplify your development process.",
     long_description=long_description,
